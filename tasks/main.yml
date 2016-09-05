@@ -1,0 +1,77 @@
+---
+- when: ansible_distribution in ['CentOS','RedHat']
+  block:
+
+    - name: EPEL Repository
+      yum_repository:
+        name: epel
+        file: epel
+        description: Extra Packages for $releasever - $basearch
+        mirrorlist: http://mirrors.fedoraproject.org/mirrorlist?repo=epel-{{ ansible_distribution_major_version }}&arch=$basearch
+        failovermethod: priority
+        gpgcheck: yes
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        enabled: yes
+        params: "{{ repo_epel | default({}) }}"
+      become: yes
+
+    - name: EPEL Repository - Debug
+      yum_repository:
+        name: epel-debuginfo
+        file: epel
+        description: Extra Packages for CentOS-$releasever - Debug
+        mirrorlist: http://mirrors.fedoraproject.org/mirrorlist?repo=epel-debug-{{ ansible_distribution_major_version }}&arch=$basearch
+        gpgcheck: yes
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        enabled: no
+        params: "{{ repo_epel_debuginfo | default({}) }}"
+      become: yes
+
+    - name: EPEL Repository - Source
+      yum_repository:
+        name: epel-source
+        file: epel
+        description: Extra Packages for CentOS-$releasever - Source
+        mirrorlist: http://mirrors.fedoraproject.org/mirrorlist?repo=epel-source-{{ ansible_distribution_major_version }}&arch=$basearch
+        gpgcheck: yes
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        enabled: no
+        params: "{{ repo_epel_source | default({}) }}"
+      become: yes
+
+    - name: EPEL Repository - Testing
+      yum_repository:
+        name: epel-testing
+        file: epel-testing
+        description: Extra Packages for CentOS-$releasever - Testing
+        mirrorlist: http://mirrors.fedoraproject.org/mirrorlist?repo=testing-epel{{ ansible_distribution_major_version }}&arch=$basearch
+        gpgcheck: yes
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        enabled: no
+        params: "{{ repo_epel_testing | default({}) }}"
+      become: yes
+
+    - name: EPEL Repository - Testing Debug
+      yum_repository:
+        name: epel-testing-debuginfo
+        file: epel-testing
+        description: Extra Packages for CentOS-$releasever - Testing Debug
+        mirrorlist: http://mirrors.fedoraproject.org/mirrorlist?repo=testing-debug-epel{{ ansible_distribution_major_version }}&arch=$basearch
+        gpgcheck: yes
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        enabled: no
+        params: "{{ repo_epel_testing_debuginfo | default({}) }}"
+      become: yes
+
+    - name: EPEL Repository - Testing Source
+      yum_repository:
+        name: epel-testing-source
+        file: epel-testing
+        description: Extra Packages for CentOS-$releasever - Testing Source
+        mirrorlist: http://mirrors.fedoraproject.org/mirrorlist?repo=testing-source-epel{{ ansible_distribution_major_version }}&arch=$basearch
+        gpgcheck: yes
+        gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+        enabled: no
+        params: "{{ repo_epel_testing_source | default({}) }}"
+      become: yes
+
