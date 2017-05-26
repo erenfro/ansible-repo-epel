@@ -24,11 +24,24 @@ Every aspect of the yum repository definition can be changed with the above para
 
 None.
 
-## Example Playbook
+## Example Playbook : defaults
 
     - hosts: servers
       roles:
         - erenfro.repo-epel
+
+## Example Playbook : variables
+
+```
+- hosts: all
+  vars:
+    - repo_epel_debuginfo: { enabled: yes }
+    - repo_epel_testing: { enabled: yes }
+  roles:
+    - erenfro.repo-epel
+```
+
+Will set overide the default (dissabled) and enable the `epel-debuginfo` and the `epel-testing` repo 
 
 ## License
 
